@@ -37,6 +37,7 @@ const cloudUpload = multer({
 });
 
 const cloudStorage = cloudUpload.single("files");
+
 const cloudUploader = (file) => {
   return fileModel.create({ url: file.linkUrl });
 };

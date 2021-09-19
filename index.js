@@ -8,6 +8,7 @@ const port = 4000;
 
 const { ticketRoute } = require("./routes/ticket");
 const { fileRoute } = require("./routes/file");
+const { blogRoute } = require("./routes/blog");
 
 console.log("*********************************");
 console.log("port:", port);
@@ -36,6 +37,7 @@ server.get("/", async (req, res) => {
 
 server.use(ticketRoute);
 server.use(fileRoute);
+server.use(blogRoute);
 
 server.use((err, req, res, next) => {
   if (err) {
@@ -45,13 +47,19 @@ server.use((err, req, res, next) => {
 });
 
 server.get("/order", async (req, res) => {
-  // console.log("new order", chatId);
-  // if (chatId) {
-  //   bot.telegram.sendMessage(chatId, "new order");
-  // }
   res.send("order");
 });
 
 server.listen(port, () => {
   console.log(`> Ready on port:${port}`);
+});
+
+const tasks = [1000, 4000, 2000, 3000, 1000];
+
+const job = (input) => {
+  console.log(input);
+};
+
+tasks.forEach((e) => {
+  job(e);
 });
