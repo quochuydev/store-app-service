@@ -51,20 +51,21 @@ const xMongoQuery = (query, options) => {
 
   Object.keys(query)
     .map((key) => {
-      for (const o of operators) {
-        const __value = options.schema[key];
-        const value = __value ? __value(query[key]) : query[key];
-
-        if (o.match(key)) {
-          return { [o.key ? o.key(key) : key]: o.do(value) };
-        }
-      }
+      const __value = options.schema[key];
+      const value = __value ? __value(query[key]) : query[key];
 
       if (options.keyword && key === "keyword") {
         return options.keyword(query[key]);
       }
 
-      return { [key]: query[key] };
+      for (const o of operators) {
+        if (o.match(key)) {
+          console.log(value);
+          return { [o.key ? o.key(key) : key]: o.do(value) };
+        }
+      }
+
+      return { [key]: value };
     })
     .map((e) => _.merge(result, e));
 

@@ -10,7 +10,7 @@ const query = {
   createdAtGte: new Date().toISOString(),
   createdAtLte: new Date().toISOString(),
   shopIdNe: 123,
-  priceNe: "123",
+  price: "100000",
   orderIdEq: "123",
   deletedAt: new Date().toISOString(),
   keyword: "this is product",
@@ -18,7 +18,7 @@ const query = {
 
 xMongoQuery(query, {
   schema: {
-    priceNe: Number,
+    price: Number,
     orderIdEq: Number,
   },
   keyword: (value) => {
