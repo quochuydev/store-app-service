@@ -7,15 +7,20 @@ const { crudServiceFactory } = require("../core/crud");
 const { xMongoQuery } = require("../core/xquery");
 
 const query = {
-  createdAtGte: new Date(),
-  createdAtLte: new Date(),
+  createdAtGte: new Date().toISOString(),
+  createdAtLte: new Date().toISOString(),
   shopIdNe: 123,
-  orderIdNe: { type: Number, value: "123" },
-  deletedAt: new Date(),
+  priceNe: "123",
+  orderIdEq: "123",
+  deletedAt: new Date().toISOString(),
   keyword: "this is product",
 };
 
 xMongoQuery(query, {
+  schema: {
+    priceNe: Number,
+    orderIdEq: Number,
+  },
   keyword: (value) => {
     return {
       $or: [

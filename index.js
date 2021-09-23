@@ -53,13 +53,3 @@ server.get("/order", async (req, res) => {
 server.listen(port, () => {
   console.log(`> Ready on port:${port}`);
 });
-
-const tasks = [1000, 4000, 2000, 3000, 1000];
-
-const job = (input) => {
-  console.log(input);
-};
-
-tasks.forEach((e) => {
-  job(e);
-});
