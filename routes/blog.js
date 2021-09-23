@@ -9,9 +9,9 @@ const { xMongoQuery } = require("../core/xquery");
 const query = {
   createdAtGte: new Date().toISOString(),
   createdAtLte: new Date().toISOString(),
-  shopIdNe: 123,
+  shopIdNe: 1001,
   price: "100000",
-  orderIdEq: "123",
+  orderIdEq: "1001",
   deletedAt: new Date().toISOString(),
   keyword: "this is product",
 };
@@ -39,7 +39,6 @@ const blogService = crudServiceFactory({ model: blogModel });
 
 setTimeout(async () => {
   await blogService.paginate({});
-  console.log("done");
 }, 100);
 
 router.post("/api/blogs/getList", async (req, res) => {
