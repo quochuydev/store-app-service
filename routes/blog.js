@@ -3,8 +3,8 @@ const express = require("express");
 const router = express.Router();
 const { blogModel } = require("../models/blog");
 
-const { crudServiceFactory } = require("../core/crud");
 const { xMongoQuery } = require("../core/xquery");
+const { crudServiceFactory } = require("../core/crudService");
 
 const query = {
   createdAtGte: new Date().toISOString(),
@@ -37,9 +37,30 @@ xMongoQuery(query, {
 
 const blogService = crudServiceFactory({ model: blogModel });
 
-setTimeout(async () => {
-  await blogService.paginate({});
-}, 100);
+router.get("/api/blogs", async (req, res) => {
+  const query = xMongoQuery(req.query, {
+    schema: {
+      price: Number,
+      orderIdEq: Number,
+    },
+    keyword: (value) => {
+      return {
+        $or: [
+          {
+            title: { $regex: new RegExp(value) },
+          },
+          {
+            body: { $regex: new RegExp(value) },
+          },
+        ],
+      };
+      // -----
+    },
+  });
+
+  const result = await blogService.paginate(query);
+  res.json(result);
+});
 
 router.post("/api/blogs/getList", async (req, res) => {
   const result = await blogService.paginate(req.body);

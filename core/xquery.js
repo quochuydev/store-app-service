@@ -46,12 +46,12 @@ const operators = [
   },
 ];
 
-const xMongoQuery = (query, options) => {
+const xMongoQuery = (query, options = {}) => {
   const result = {};
 
   Object.keys(query)
     .map((key) => {
-      const __value = options.schema[key];
+      const __value = options.schema ? options.schema[key] : null;
       const value = __value ? __value(query[key]) : query[key];
 
       if (options.keyword && key === "keyword") {
@@ -60,7 +60,6 @@ const xMongoQuery = (query, options) => {
 
       for (const o of operators) {
         if (o.match(key)) {
-          console.log(value);
           return { [o.key ? o.key(key) : key]: o.do(value) };
         }
       }
@@ -79,4 +78,5 @@ const xElasticQuery = (query) => {
 
   return result;
 };
+
 module.exports = { xQuery, xMongoQuery, xElasticQuery };
